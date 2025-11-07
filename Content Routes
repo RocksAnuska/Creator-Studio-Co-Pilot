@@ -1,0 +1,152 @@
+import express from 'express';
+import { Content } from '../models/models.js'; // Ensure .js extension
+import { UserProfile } from '../models/models.js'; // Ensure .js extension
+
+const router = express.Router();
+
+// --- POST /api/content/save ---
+// Save a new piece of generated content
+router.post('/save', async (req, res, next) => {
+  try {
+    const {
+      userId,
+      topic,
+      contentType,
+      tone,
+      targetAudience,
+      theme,
+      generatedScript,
+      generatedCaption,
+      generatedHashtags,
+      generatedThumbnailPrompt,
+      audioSuggestion
+    } = req.body;
+
+    // Basic validation
+    if (!userId || !topic || !generatedScript) {
+      return res.status(400).json({ message: 'Missing required fields (userId, topic, generatedScript).' });
+    }
+
+    const newContent = new Content({
+      userId,
+      topic,
+      contentType,
+      tone,
+      targetAudience,
+      theme,
+      generatedScript,
+      generatedCaption,
+      generatedHashtags,
+      generatedThumbnailPrompt,
+      audioSuggestion
+    });
+
+    const savedContent = await newContent.save();
+
+    // Increment user's generation count (fire and forget)
+    UserProfile.findOneAndUpdate(
+      { userId: userId },
+      { $inc: { generationCount: 1 } },
+      { upsert: true } // Create profile if it doesn't exist
+    ).catch(err => console.error('Failed to update user generation count:', err));
+
+    res.status(201).json({
+      success: true,
+      message: 'Content saved successfully.',
+      data: savedContent
+    });
+
+  } catch (error) {
+    console.error('Error saving content:', error);
+    next(error);
+  }
+});
+
+// --- GET /api/content/history/:userId ---
+// Retrieve a user's content history with pagination
+router.get('/history/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required.' });
+    }
+
+    const contents = await Content.find({ userId: userId })
+      .sort({ createdAt: -1 }) // Show newest first
+      .skip(skip)
+      .limit(limit)
+      .exec();
+
+    const totalCount = await Content.countDocuments({ userId: userId });
+
+    res.status(200).json({
+      success: true,
+      data: contents,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(totalCount / limit),
+        totalCount: totalCount
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching content history:', error);
+    next(error);
+  }
+});
+
+// --- GET /api/content/:contentId ---
+// Get a specific piece of content by its ID
+router.get('/:contentId', async (req, res, next) => {
+  try {
+    const { contentId } = req.params;
+    
+    // Validate MongoDB ObjectId
+    if (!contentId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).json({ message: 'Invalid Content ID format.' });
+    }
+
+    const content = await Content.findById(contentId);
+
+    if (!content) {
+      return res.status(404).json({ message: 'Content not found.' });
+    }
+
+    res.status(200).json({ success: true, data: content });
+
+  } catch (error) {
+    console.error('Error fetching specific content:', error);
+    next(error);
+  }
+});
+
+// --- DELETE /api/content/:contentId ---
+// Delete a specific piece of content
+router.delete('/:contentId', async (req, res, next) => {
+  try {
+    const { contentId } = req.params;
+
+    // Validate MongoDB ObjectId
+    if (!contentId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).json({ message: 'Invalid Content ID format.' });
+    }
+
+    const deletedContent = await Content.findByIdAndDelete(contentId);
+
+    if (!deletedContent) {
+      return res.status(404).json({ message: 'Content not found.' });
+    }
+
+    res.status(200).json({ success: true, message: 'Content deleted successfully.' });
+
+  } catch (error) {
+    console.error('Error deleting content:', error);
+    next(error);
+  }
+});
+
+export default router;
