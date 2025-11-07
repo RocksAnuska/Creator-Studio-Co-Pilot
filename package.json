@@ -1,31 +1,7 @@
 {
-  "name": "creator-studio-backend",
-  "version": "1.0.0",
-  "description": "Backend for Creator Studio Co-pilot",
-  "main": "server.js",
-  "type": "module",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
-  "keywords": [
-    "genai",
-    "react",
-    "express",
-    "openai"
-  ],
-  "author": "Full-Stack Expert",
-  "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.8",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mongoose": "^8.3.4",
-    "openai": "^4.40.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
+    "@tailwindcss/vite": "^4.1.17",
+    "react-router-dom": "^7.9.5",
+    "tailwindcss": "^4.1.17"
   }
 }
