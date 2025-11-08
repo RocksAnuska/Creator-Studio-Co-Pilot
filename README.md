@@ -1,73 +1,174 @@
-# Welcome to your Lovable project
+# 🎬 Creator Studio Co-Pilot
 
-## Project info
+> **Your personal AI-powered content creation assistant.**  
+> Streamline your creative workflow — from idea generation to script writing, thumbnail suggestions, and publishing — all in one platform.
 
-**URL**: https://lovable.dev/projects/f0316241-aa50-402c-8928-9e858246a07c
+---
 
-## How can I edit this code?
+## 🚀 Overview
 
-There are several ways of editing your application.
+**Creator Studio Co-Pilot** is a Gen-AI platform that helps creators turn their ideas into ready-to-publish content within seconds.  
+No more switching between multiple tools for scripts, visuals, thumbnails, and audio — Co-Pilot merges everything in one place.
 
-**Use Lovable**
+This project was developed as part of a **hackathon** to demonstrate how **AI, LLMs, and automation** can revolutionize content creation.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f0316241-aa50-402c-8928-9e858246a07c) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🧠 Key Features
 
-**Use your preferred IDE**
+- ✍️ **Idea to Script Generator** – Convert your topic or thought into engaging YouTube/video scripts using GPT-4 / Gemini API.  
+- 🎨 **Thumbnail Assistant** – Suggest or generate thumbnail ideas and designs.  
+- 🎧 **Audio & Music Recommender** – Find the perfect soundtrack or background music.  
+- 🧩 **Content Planner** – Organize content workflow with titles, descriptions, and publishing calendar.  
+- 🌐 **Multi-Platform Ready** – Supports export for YouTube, Instagram, and Reels content.  
+- 🤖 **AI Co-Pilot Chat** – Chat-based assistant for brainstorming ideas.  
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🧰 Tech Stack
 
-Follow these steps:
+| Layer | Technology |
+|-------|-------------|
+| **Frontend** | React (Vite + TypeScript) + Tailwind CSS |
+| **Backend** | Python (FastAPI / Flask) |
+| **AI / LLM Integration** | GPT-4 API, Gemini API, LangChain |
+| **Database (optional)** | MongoDB / Firebase / PostgreSQL |
+| **Containerization** | Docker |
+| **Version Control** | Git + GitHub |
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🗂️ Folder Structure
 
-# Step 3: Install the necessary dependencies.
-npm i
+Creator-Studio-Co-Pilot/
+│
+├── backend/ # Python backend (API endpoints, AI integrations)
+│ ├── main.py
+│ ├── requirements.txt
+│ └── utils/
+│
+├── src/ # React frontend (Vite + TS)
+│ ├── components/
+│ ├── pages/
+│ ├── assets/
+│ └── App.tsx
+│
+├── public/ # Static assets
+│
+├── dockerfile
+├── .gitignore
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+└── README.md
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/RocksAnuska/Creator-Studio-Co-Pilot.git
+cd Creator-Studio-Co-Pilot
+
+2️⃣ Frontend Setup
+cd src
+npm install
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+The app should now run on http://localhost:5173/.
+3️⃣ Backend Setup
+cd backend
+pip install -r requirements.txt
+python main.py
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The backend runs on http://localhost:8000/.
+4️⃣ Environment Variables
+Create a .env file in both frontend and backend directories:
+.env (Backend)
+OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_gemini_key
 
-**Use GitHub Codespaces**
+.env (Frontend)
+VITE_BACKEND_URL=http://localhost:8000
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+🐳 Docker Setup (Optional)
+You can containerize the full stack app with Docker:
+docker build -t creator-copilot .
+docker run -p 5173:5173 -p 8000:8000 creator-copilot
 
-This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+💡 Usage
 
-## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/f0316241-aa50-402c-8928-9e858246a07c) and click on Share -> Publish.
+Open the app and enter your content idea.
 
-## Can I connect a custom domain to my Lovable project?
 
-Yes, you can!
+Choose your platform (YouTube, Instagram, etc).
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The Co-Pilot generates scripts, thumbnails, and music ideas automatically.
+
+
+Edit, download, and publish — all from one dashboard.
+
+
+
+🧩 Future Enhancements
+
+
+🎥 Video auto-generation with stock visuals.
+
+
+🗣️ Voice cloning for personalized narration.
+
+
+💾 Cloud sync for creator projects.
+
+
+🧭 Analytics dashboard for engagement prediction.
+
+
+
+🏆 Hackathon Project
+This project was built during a Hackathon 2025 with the theme “AI for Creators”.
+Our goal was to simplify the content creation pipeline using Gen-AI and LLMs.
+
+👩‍💻 Contributors
+
+
+Anuska Dutta – Frontend Developer, UI/UX
+Mayukh Ghosh – Backend
+Rupanjan Saha - AI Integration
+Debarghya Sarkar - Design
+
+
+
+📜 License
+This project is licensed under the MIT License – feel free to use and modify it for your own learning or research.
+
+🌟 Show Your Support
+If you like this project:
+
+
+⭐ Star the repository
+
+
+🐛 Report bugs or suggest features via Issues
+
+
+🧠 Contribute with your own improvements!
+
+
+
+
+“Empowering creators to create — faster, smarter, better.” 🎥
+
+
+---
+
+Would you like me to tailor this README for your **hackathon submission** (with a short “Problem Statement”, “Solution”, “Impact”, and “Demo” section)?  
+That version looks great in judging presentations and DevPost entries.
+
