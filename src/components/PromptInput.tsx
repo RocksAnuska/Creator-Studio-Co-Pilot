@@ -3,19 +3,46 @@ import { Sparkles, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import apiClient from "@/lib/api";
 
 export const PromptInput = () => {
   const [prompt, setPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!prompt.trim()) {
       toast.error("Please enter your idea first!");
       return;
     }
-    toast.success("Creating your content...", {
+
+    setIsLoading(true);
+    toast.info("Creating your content...", {
       description: "Your AI co-pilot is working on it!",
     });
-    setPrompt("");
+
+    try {
+      const res = await apiClient.processPrompt(prompt);
+      if (!res.success) {
+        toast.error(res.error || 'Failed to process prompt');
+        return;
+      }
+
+      toast.success("Content processed", {
+        description: res.data?.suggestions?.analysis || 'Suggestions generated',
+      });
+
+      // Log the suggestions; extend to automatically navigate/open tools based on suggested_tools
+      // eslint-disable-next-line no-console
+      console.log('Process prompt result:', res.data);
+
+      setPrompt("");
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Prompt submit error:', err);
+      toast.error(err instanceof Error ? err.message : 'Failed to create content');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -41,9 +68,10 @@ export const PromptInput = () => {
           <Button 
             onClick={handleSubmit}
             className="bg-gradient-primary hover:opacity-90 transition-opacity gap-2"
+            disabled={isLoading}
           >
             <Send className="h-4 w-4" />
-            Generate
+            {isLoading ? 'Generating...' : 'Generate'}
           </Button>
         </div>
       </div>

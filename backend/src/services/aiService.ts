@@ -59,7 +59,7 @@ export async function generateImage(prompt: string, style?: string): Promise<str
 
 // Frontend code example
 (async () => {
-  const response = await fetch('http://localhost:5173/api/generate', {
+  const response = await fetch('http://localhost:5174/api/generate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

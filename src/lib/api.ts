@@ -1,6 +1,6 @@
 // API Client for Creator Studio Co-Pilot Backend
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Default to backend port 5174 used by the project. Override with VITE_API_URL in .env if needed.
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5174';
 
 interface ApiResponse<T> {
   success: boolean;

@@ -28,7 +28,8 @@ const ImageCreator = () => {
     });
 
     try {
-      const response = await fetch('http://localhost:5173/api/generate', {
+  // Point to backend running on 5174 (Vite runs on 5173 by default).
+  const response = await fetch('http://localhost:5174/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
