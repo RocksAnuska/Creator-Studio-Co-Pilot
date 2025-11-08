@@ -13,15 +13,51 @@ const ImageCreator = () => {
   const [prompt, setPrompt] = useState("");
   const [style, setStyle] = useState("realistic");
   const [size, setSize] = useState([1024]);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (!prompt.trim()) {
       toast.error("Please enter a prompt");
       return;
     }
-    toast.success("Generating your image...", {
-      description: "This will take a few moments",
+
+    setIsGenerating(true);
+    toast.info("Generating your image...", {
+      description: "This may take up to 30 seconds"
     });
+
+    try {
+      const response = await fetch('http://localhost:5173/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          style: style,
+          size: `${size[0]}x${size[0]}`
+        })
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to generate image');
+      }
+
+      if (data.success && data.data.imageUrl) {
+        setGeneratedImage(data.data.imageUrl);
+        toast.success("Image generated successfully!");
+      } else {
+        throw new Error('No image data received');
+      }
+    } catch (error) {
+      console.error('Generation error:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to generate image');
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -128,17 +164,45 @@ const ImageCreator = () => {
             <Card className="p-6 border-border/50">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold">Preview</h2>
-                <Button variant="outline" size="sm" className="gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="gap-2"
+                  disabled={!generatedImage}
+                  onClick={() => {
+                    if (generatedImage) {
+                      const link = document.createElement('a');
+                      link.href = generatedImage;
+                      link.download = `ai-image-${Date.now()}.png`;
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }
+                  }}
+                >
                   <Download className="h-4 w-4" />
                   Download
                 </Button>
               </div>
 
-              <div className="aspect-square rounded-xl bg-muted flex items-center justify-center border-2 border-dashed border-border">
-                <div className="text-center text-muted-foreground">
-                  <ImagePlus className="h-16 w-16 mx-auto mb-3 opacity-50" />
-                  <p>Your generated image will appear here</p>
-                </div>
+              <div className="aspect-square rounded-xl bg-muted flex items-center justify-center border-2 border-dashed border-border overflow-hidden">
+                {isGenerating ? (
+                  <div className="text-center text-muted-foreground">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-3" />
+                    <p>Generating your masterpiece...</p>
+                  </div>
+                ) : generatedImage ? (
+                  <img 
+                    src={generatedImage} 
+                    alt={prompt}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="text-center text-muted-foreground">
+                    <ImagePlus className="h-16 w-16 mx-auto mb-3 opacity-50" />
+                    <p>Your generated image will appear here</p>
+                  </div>
+                )}
               </div>
             </Card>
 
