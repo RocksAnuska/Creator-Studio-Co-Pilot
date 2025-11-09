@@ -74,16 +74,19 @@ cd Creator-Studio-Co-Pilot
 ```
 
 2️⃣ Frontend Setup
+```bash
 cd src
 npm install
 npm run dev
+```
 
 The app should now run on http://localhost:5173/.
 3️⃣ Backend Setup
+```bash
 cd backend
 pip install -r requirements.txt
 python main.py
-
+```
 The backend runs on http://localhost:8000/.
 4️⃣ Environment Variables
 Create a .env file in both frontend and backend directories:
@@ -102,30 +105,15 @@ docker run -p 5173:5173 -p 8000:8000 creator-copilot
 
 
 💡 Usage
-
-
 Open the app and enter your content idea.
-
-
 Choose your platform (YouTube, Instagram, etc).
-
-
 The Co-Pilot generates scripts, thumbnails, and music ideas automatically.
-
-
 Edit, download, and publish — all from one dashboard.
 
 
-
 🧩 Future Enhancements
-
-
 🎥 Video auto-generation with stock visuals.
-
-
 🗣️ Voice cloning for personalized narration.
-
-
 💾 Cloud sync for creator projects.
 
 
@@ -138,8 +126,6 @@ This project was built during a Hackathon 2025 with the theme “AI for Creators
 Our goal was to simplify the content creation pipeline using Gen-AI and LLMs.
 
 👩‍💻 Contributors
-
-
 Anuska Dutta – Frontend Developer, UI/UX
 Mayukh Ghosh – Backend
 Rupanjan Saha - AI & API  Integration
@@ -153,13 +139,8 @@ This project is licensed under the MIT License – feel free to use and modify i
 🌟 Show Your Support
 If you like this project:
 
-
 ⭐ Star the repository
-
-
 🐛 Report bugs or suggest features via Issues
-
-
 🧠 Contribute with your own improvements!
 
 
