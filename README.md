@@ -71,6 +71,7 @@ Creator-Studio-Co-Pilot/
 ```bash
 git clone https://github.com/RocksAnuska/Creator-Studio-Co-Pilot.git
 cd Creator-Studio-Co-Pilot
+```
 
 2️⃣ Frontend Setup
 cd src
@@ -141,7 +142,7 @@ Our goal was to simplify the content creation pipeline using Gen-AI and LLMs.
 
 Anuska Dutta – Frontend Developer, UI/UX
 Mayukh Ghosh – Backend
-Rupanjan Saha - AI Integration
+Rupanjan Saha - AI & API  Integration
 Debarghya Sarkar - Design
 
 
